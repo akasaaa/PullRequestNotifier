@@ -34,17 +34,13 @@ class ViewModel: ObservableObject {
     @AppStorage("host") private var host = ""
     @AppStorage("user") private var user = ""
     @AppStorage("repository") private var repository = ""
-    @AppStorage("userName") private var userName = ""
+    @AppStorage("currentUserAccount") private var currentUserAccount = ""
     @AppStorage("labelFilter") private var labelFilter = ""
     @AppStorage("showSelf") private var showSelf = true
     @AppStorage("showApprove") private var showApprove = true
     @AppStorage("startHour") private var startHour = 10
     @AppStorage("endHour") private var endHour = 19
-    @AppStorage("fetchInterval") private var fetchInterval = 300 {
-        didSet {
-            print("----fetchInterval didSet", fetchInterval)
-        }
-    }
+    @AppStorage("fetchInterval") private var fetchInterval = 300
 
     private let notifier = Notifier()
     private let fetcher: FetcherProtocol
@@ -54,7 +50,7 @@ class ViewModel: ObservableObject {
     private var pulls = [PullRequest]() {
         didSet {
             DispatchQueue.main.async {
-                self.rows = self.pulls.compactMap { RowData($0, currentUser: self.userName) }
+                self.rows = self.pulls.compactMap { RowData($0, currentUser: self.currentUserAccount) }
             }
         }
     }
@@ -110,14 +106,14 @@ class ViewModel: ObservableObject {
                     if showSelf {
                         return true
                     } else {
-                        return pull.user?.login != userName
+                        return pull.user?.login != currentUserAccount
                     }
                 }
                 .filter { pull in
                     if showApprove {
                         return true
                     } else {
-                        return !pull.reviews.contains { $0.user?.login == userName && $0.state == "APPROVED" }
+                        return !pull.reviews.contains { $0.user?.login == currentUserAccount && $0.state == "APPROVED" }
                     }
                 }
                 .filter { pull in
@@ -146,7 +142,6 @@ class ViewModel: ObservableObject {
                     break
                 }
             }
-            print("--- fetch failed. \(error)")
         }
     }
 

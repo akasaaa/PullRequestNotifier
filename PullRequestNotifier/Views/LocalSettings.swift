@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LocalSettings: View {
 
+    @AppStorage("currentUserAccount") private var currentUserAccount = ""
     @AppStorage("showSelf") private var showSelf = true
     @AppStorage("showApprove") private var showApprove = true
     @AppStorage("startHour") private var startHour = 10
@@ -17,6 +18,11 @@ struct LocalSettings: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 16) {
+            HStack {
+                Text("userName: ")
+                TextField("e.g. akasaaa", text: $currentUserAccount)
+                    .frame(width: 180)
+            }
             HStack {
                 Text("show self pull request: ")
                 HStack {
