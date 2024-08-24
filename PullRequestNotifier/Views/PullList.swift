@@ -13,12 +13,15 @@ struct PullList: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Button(action: {
-                Task {
-                    await viewModel.update(withNotify: true)
+            HStack {
+                Button(action: {
+                    Task {
+                        await viewModel.update(withNotify: true)
+                    }
+                }) {
+                    Image(systemName: "arrow.clockwise")
                 }
-            }) {
-                Image(systemName: "arrow.clockwise")
+                Text(viewModel.untilNextUpdateText)
             }
             .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
             List {

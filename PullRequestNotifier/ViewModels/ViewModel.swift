@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RowData: PullRowApplicable {
     let number: Int
@@ -44,8 +45,9 @@ class ViewModel: ObservableObject {
 
     private let notifier = Notifier()
     private let fetcher: FetcherProtocol
-
-    private var timer: Timer?
+    private var timerCancelable: AnyCancellable?
+    private var nextUpdateSecondsTimerCancelable: AnyCancellable?
+    private var nextUpdateDate: Date?
 
     private var pulls = [PullRequest]() {
         didSet {
@@ -62,6 +64,7 @@ class ViewModel: ObservableObject {
     @Published var rows = [PullRowApplicable]()
     @Published var shouldShowAlert = false
     @Published var shouldShowPreferences = false
+    @Published var untilNextUpdateText = ""
 
     init(fetcher: FetcherProtocol = Fetcher()) {
         self.fetcher = fetcher
@@ -70,14 +73,31 @@ class ViewModel: ObservableObject {
 
     private func setup() {
         notifier.authorize()
-        setupTimer()
+        setupTimers()
     }
 
-    private func setupTimer() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            timer?.invalidate()
-            timer = Timer.scheduledTimer(withTimeInterval: Double(fetchInterval), repeats: true) { _ in
+    private func setupTimers() {
+        setupNextUpdateSecondsTimer()
+        updateFetchTimer()
+    }
+    
+    private func setupNextUpdateSecondsTimer() {
+        nextUpdateSecondsTimerCancelable = Timer.publish(every: 0.1, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] current in
+                guard let self, let nextUpdateDate else { return }
+                let seconds = Int(nextUpdateDate.timeIntervalSince(current))
+                self.untilNextUpdateText = seconds == 0 ? "updating..." : "next: \(seconds))s"
+            }
+    }
+
+    private func updateFetchTimer() {
+        nextUpdateDate = Date().addingTimeInterval(Double(fetchInterval))
+        timerCancelable = Timer.publish(every: Double(fetchInterval), on: .main, in: .default)
+            .autoconnect()
+            .sink(receiveValue: { [weak self] hoge in
+                guard let self else { return }
+                nextUpdateDate = Date().addingTimeInterval(Double(fetchInterval))
                 Task {
                     let currentDate = Date()
                     var components = Calendar(identifier: .gregorian).dateComponents(in: .current, from: currentDate)
@@ -91,14 +111,11 @@ class ViewModel: ObservableObject {
                     }
                     await self.update(withNotify: true)
                 }
-            }
-        }
+            })
     }
 
     func update(withNotify: Bool) async {
-        if timer?.timeInterval != Double(fetchInterval) {
-            setupTimer()
-        }
+        updateFetchTimer()
         do {
             let previous = pulls
             pulls = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
