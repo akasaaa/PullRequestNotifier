@@ -31,12 +31,8 @@ struct RowData: PullRowApplicable {
 
 class ViewModel: ObservableObject {
 
-    @AppStorage("token") private var token = ""
-    @AppStorage("host") private var host = ""
-    @AppStorage("user") private var user = ""
-    @AppStorage("repository") private var repository = ""
+    @AppStorage("repositorySetting") private var repositorySetting = Data()
     @AppStorage("currentUserAccount") private var currentUserAccount = ""
-    @AppStorage("labelFilter") private var labelFilter = ""
     @AppStorage("showSelf") private var showSelf = true
     @AppStorage("showApprove") private var showApprove = true
     @AppStorage("startHour") private var startHour = 10
@@ -87,7 +83,7 @@ class ViewModel: ObservableObject {
             .sink { [weak self] current in
                 guard let self, let nextUpdateDate else { return }
                 let seconds = Int(nextUpdateDate.timeIntervalSince(current))
-                self.untilNextUpdateText = seconds == 0 ? "updating..." : "next: \(seconds))s"
+                self.untilNextUpdateText = seconds == 0 ? "updating..." : "next: \(seconds)s"
             }
     }
 
@@ -116,6 +112,15 @@ class ViewModel: ObservableObject {
 
     func update(withNotify: Bool) async {
         updateFetchTimer()
+        let decoder = JSONDecoder()
+        guard let decoded = try? decoder.decode(RepositorySetting.self, from: repositorySetting) else {
+            return
+        }
+        let token = decoded.token
+        let host = decoded.host
+        let user = decoded.user
+        let repository = decoded.repository
+        let labelFilter = decoded.labelFilter
         do {
             let previous = pulls
             pulls = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)

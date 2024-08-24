@@ -7,16 +7,28 @@
 
 import SwiftUI
 
-struct GitHubSettings: View {
+struct RepositorySetting: Codable {
+    var token = ""
+    var host = ""
+    var user = ""
+    var repository = ""
+    var labelFilter = ""
+}
 
-    @AppStorage("token") private var token = ""
+struct GitHubSettings: View {
+    
+    private let encoder = JSONEncoder()
+    
+    @AppStorage("repositorySetting") private var repositorySetting = Data()
+
+    @State private var token = ""
 
     // TODO: 複数持てるようにする
-    @AppStorage("host") private var host = ""
-    @AppStorage("user") private var user = ""
-    @AppStorage("repository") private var repository = ""
+    @State private var host = ""
+    @State private var user = ""
+    @State private var repository = ""
     // TODO: 複数のラベルに対応させる
-    @AppStorage("labelFilter") private var labelFilter = ""
+    @State private var labelFilter = ""
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 16) {
@@ -44,6 +56,22 @@ struct GitHubSettings: View {
                 Text("labelFilter: ")
                 TextField("e.g. bug", text: $labelFilter)
                     .frame(width: 360)
+            }
+        }
+        .onAppear {
+            let decoder = JSONDecoder()
+            if let decoded = try? decoder.decode(RepositorySetting.self, from: repositorySetting) {
+                token = decoded.token
+                host = decoded.host
+                user = decoded.user
+                repository = decoded.repository
+                labelFilter = decoded.labelFilter
+            }
+        }
+        .onChange(of: [token, host, user, repository, labelFilter]) { _, changes in
+            let setting = RepositorySetting(token: changes[0], host: changes[1], user: changes[2], repository: changes[3], labelFilter: changes[4])
+            if let encoded = try? encoder.encode(setting) {
+                repositorySetting = encoded
             }
         }
         .frame(width: 500)
