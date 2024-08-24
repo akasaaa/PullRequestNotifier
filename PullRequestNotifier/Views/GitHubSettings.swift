@@ -15,7 +15,6 @@ struct GitHubSettings: View {
     @AppStorage("host") private var host = ""
     @AppStorage("user") private var user = ""
     @AppStorage("repository") private var repository = ""
-    @AppStorage("userName") private var userName = ""
     // TODO: 複数のラベルに対応させる
     @AppStorage("labelFilter") private var labelFilter = ""
 
@@ -39,11 +38,6 @@ struct GitHubSettings: View {
             HStack {
                 Text("repository: ")
                 TextField("e.g. PullRequestNotifier", text: $repository)
-                    .frame(width: 360)
-            }
-            HStack {
-                Text("userName: ")
-                TextField("e.g. akasaaa", text: $userName)
                     .frame(width: 360)
             }
             HStack {
