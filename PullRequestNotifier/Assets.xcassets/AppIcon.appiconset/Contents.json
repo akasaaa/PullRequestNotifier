@@ -21,11 +21,13 @@
       "size" : "32x32"
     },
     {
+      "filename" : "github-mark 1.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
+      "filename" : "github-mark.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"

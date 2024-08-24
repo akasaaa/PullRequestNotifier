@@ -8,18 +8,50 @@
 
 /* Begin PBXBuildFile section */
 		DF115C412C79493200B7EF9C /* PullRequestNotifierApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C402C79493200B7EF9C /* PullRequestNotifierApp.swift */; };
-		DF115C432C79493200B7EF9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C422C79493200B7EF9C /* ContentView.swift */; };
 		DF115C452C79493400B7EF9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF115C442C79493400B7EF9C /* Assets.xcassets */; };
 		DF115C482C79493400B7EF9C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF115C472C79493400B7EF9C /* Preview Assets.xcassets */; };
+		DF115C522C7949D600B7EF9C /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C512C7949D600B7EF9C /* Branch.swift */; };
+		DF115C542C7949F000B7EF9C /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C532C7949F000B7EF9C /* Label.swift */; };
+		DF115C562C794A1700B7EF9C /* Milestone.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C552C794A1700B7EF9C /* Milestone.swift */; };
+		DF115C582C794A4300B7EF9C /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C572C794A4300B7EF9C /* PullRequest.swift */; };
+		DF115C5A2C794A5B00B7EF9C /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C592C794A5B00B7EF9C /* Review.swift */; };
+		DF115C5C2C794A6D00B7EF9C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C5B2C794A6D00B7EF9C /* User.swift */; };
+		DF115C5E2C794A7E00B7EF9C /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C5D2C794A7E00B7EF9C /* Error.swift */; };
+		DF115C602C794A9A00B7EF9C /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C5F2C794A9A00B7EF9C /* Fetcher.swift */; };
+		DF115C622C794AC000B7EF9C /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C612C794AC000B7EF9C /* Notifier.swift */; };
+		DF115C642C794B3600B7EF9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C632C794B3600B7EF9C /* AppDelegate.swift */; };
+		DF115C682C794BA100B7EF9C /* PullList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C672C794BA100B7EF9C /* PullList.swift */; };
+		DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C692C794BC000B7EF9C /* PullRow.swift */; };
+		DF115C6C2C794BDD00B7EF9C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6B2C794BDD00B7EF9C /* Preferences.swift */; };
+		DF115C6E2C794BFF00B7EF9C /* GitHubSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */; };
+		DF115C702C794C1300B7EF9C /* LocalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */; };
+		DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C712C794C3000B7EF9C /* PasswordField.swift */; };
+		DF115C742C794C5F00B7EF9C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C732C794C5F00B7EF9C /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DF115C3D2C79493200B7EF9C /* PullRequestNotifier.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PullRequestNotifier.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF115C402C79493200B7EF9C /* PullRequestNotifierApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestNotifierApp.swift; sourceTree = "<group>"; };
-		DF115C422C79493200B7EF9C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DF115C442C79493400B7EF9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF115C472C79493400B7EF9C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DF115C492C79493400B7EF9C /* PullRequestNotifier.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PullRequestNotifier.entitlements; sourceTree = "<group>"; };
+		DF115C512C7949D600B7EF9C /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Branch.swift; path = ../../../../Branch.swift; sourceTree = "<group>"; };
+		DF115C532C7949F000B7EF9C /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		DF115C552C794A1700B7EF9C /* Milestone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
+		DF115C572C794A4300B7EF9C /* PullRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
+		DF115C592C794A5B00B7EF9C /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		DF115C5B2C794A6D00B7EF9C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		DF115C5D2C794A7E00B7EF9C /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		DF115C5F2C794A9A00B7EF9C /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
+		DF115C612C794AC000B7EF9C /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
+		DF115C632C794B3600B7EF9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DF115C672C794BA100B7EF9C /* PullList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullList.swift; sourceTree = "<group>"; };
+		DF115C692C794BC000B7EF9C /* PullRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRow.swift; sourceTree = "<group>"; };
+		DF115C6B2C794BDD00B7EF9C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSettings.swift; sourceTree = "<group>"; };
+		DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSettings.swift; sourceTree = "<group>"; };
+		DF115C712C794C3000B7EF9C /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
+		DF115C732C794C5F00B7EF9C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +85,10 @@
 			isa = PBXGroup;
 			children = (
 				DF115C402C79493200B7EF9C /* PullRequestNotifierApp.swift */,
-				DF115C422C79493200B7EF9C /* ContentView.swift */,
+				DF115C632C794B3600B7EF9C /* AppDelegate.swift */,
+				DF115C652C794B8200B7EF9C /* Views */,
+				DF115C662C794B8D00B7EF9C /* ViewModels */,
+				DF115C4F2C7949A900B7EF9C /* Models */,
 				DF115C442C79493400B7EF9C /* Assets.xcassets */,
 				DF115C492C79493400B7EF9C /* PullRequestNotifier.entitlements */,
 				DF115C462C79493400B7EF9C /* Preview Content */,
@@ -67,6 +102,51 @@
 				DF115C472C79493400B7EF9C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DF115C4F2C7949A900B7EF9C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DF115C502C7949B200B7EF9C /* Entities */,
+				DF115C5D2C794A7E00B7EF9C /* Error.swift */,
+				DF115C5F2C794A9A00B7EF9C /* Fetcher.swift */,
+				DF115C612C794AC000B7EF9C /* Notifier.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		DF115C502C7949B200B7EF9C /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				DF115C512C7949D600B7EF9C /* Branch.swift */,
+				DF115C532C7949F000B7EF9C /* Label.swift */,
+				DF115C552C794A1700B7EF9C /* Milestone.swift */,
+				DF115C572C794A4300B7EF9C /* PullRequest.swift */,
+				DF115C592C794A5B00B7EF9C /* Review.swift */,
+				DF115C5B2C794A6D00B7EF9C /* User.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		DF115C652C794B8200B7EF9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DF115C672C794BA100B7EF9C /* PullList.swift */,
+				DF115C692C794BC000B7EF9C /* PullRow.swift */,
+				DF115C6B2C794BDD00B7EF9C /* Preferences.swift */,
+				DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */,
+				DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */,
+				DF115C712C794C3000B7EF9C /* PasswordField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DF115C662C794B8D00B7EF9C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DF115C732C794C5F00B7EF9C /* ViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +219,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF115C432C79493200B7EF9C /* ContentView.swift in Sources */,
+				DF115C642C794B3600B7EF9C /* AppDelegate.swift in Sources */,
+				DF115C6E2C794BFF00B7EF9C /* GitHubSettings.swift in Sources */,
+				DF115C582C794A4300B7EF9C /* PullRequest.swift in Sources */,
+				DF115C622C794AC000B7EF9C /* Notifier.swift in Sources */,
+				DF115C5A2C794A5B00B7EF9C /* Review.swift in Sources */,
+				DF115C602C794A9A00B7EF9C /* Fetcher.swift in Sources */,
+				DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */,
+				DF115C522C7949D600B7EF9C /* Branch.swift in Sources */,
+				DF115C5C2C794A6D00B7EF9C /* User.swift in Sources */,
+				DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */,
+				DF115C742C794C5F00B7EF9C /* ViewModel.swift in Sources */,
+				DF115C6C2C794BDD00B7EF9C /* Preferences.swift in Sources */,
+				DF115C702C794C1300B7EF9C /* LocalSettings.swift in Sources */,
+				DF115C542C7949F000B7EF9C /* Label.swift in Sources */,
+				DF115C562C794A1700B7EF9C /* Milestone.swift in Sources */,
+				DF115C5E2C794A7E00B7EF9C /* Error.swift in Sources */,
+				DF115C682C794BA100B7EF9C /* PullList.swift in Sources */,
 				DF115C412C79493200B7EF9C /* PullRequestNotifierApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
