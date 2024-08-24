@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+let preferenceWindow: NSWindow = {
+    let window = NSWindow()
+    window.styleMask.insert(.closable)
+    window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+    window.standardWindowButton(.zoomButton)?.isHidden = true
+    window.isReleasedWhenClosed = false
+    window.contentView = NSHostingView(rootView: Preferences().frame(width: 600, height: 400))
+    return window
+}()
+
 struct Preferences: View {
 
     enum PreferencesMenu: String, CaseIterable  {

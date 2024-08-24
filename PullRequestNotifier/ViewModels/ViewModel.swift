@@ -172,14 +172,8 @@ class ViewModel: ObservableObject {
     }
 
     private func showPreferences() {
-        let window = NSWindow()
-        window.styleMask.insert(.closable)
-        window.standardWindowButton(.miniaturizeButton)?.isHidden = true
-        window.standardWindowButton(.zoomButton)?.isHidden = true
-        window.isReleasedWhenClosed = false
-        window.contentView = NSHostingView(rootView: Preferences().frame(width: 600, height: 400))
-        window.center()
-        window.makeKeyAndOrderFront(nil)
+        preferenceWindow.center()
+        preferenceWindow.makeKeyAndOrderFront(nil)
         NSApp.windows.forEach { if ($0.canBecomeMain) {$0.orderFrontRegardless() } }
     }
 }
