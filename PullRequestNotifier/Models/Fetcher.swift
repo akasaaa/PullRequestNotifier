@@ -46,7 +46,7 @@ struct Fetcher: FetcherProtocol {
     func getReview(host: String, user: String, repository: String, token: String, number: Int) async throws -> [Review] {
 
         guard [host, user, repository, token].allSatisfy({ !$0.isEmpty }),
-              let url = URL(string: "https://api.github.com/repos/\(user)/\(repository)/pulls/\(number)/reviews") else {
+              let url = URL(string: "https://\(host)/repos/\(user)/\(repository)/pulls/\(number)/reviews") else {
             throw Error.invalidParameters
         }
         var request = URLRequest(url: url)
