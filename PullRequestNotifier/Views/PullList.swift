@@ -25,11 +25,15 @@ struct PullList: View {
             }
             .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
             List {
-                ForEach(viewModel.pullRequests, id: \.number) { pullRequest in
-                    PullRow(pullRequest: pullRequest)
-                        .onTapGesture {
-                            viewModel.didTap(pullRequest)
+                ForEach(viewModel.fetchedData) { repository in
+                    Section(repository.id) {
+                        ForEach(repository.pullRequests, id: \.number) { pullRequest in
+                            PullRow(pullRequest: pullRequest)
+                                .onTapGesture {
+                                    viewModel.didTap(pullRequest)
+                                }
                         }
+                    }
                 }
             }
             .task {

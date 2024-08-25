@@ -8,6 +8,17 @@
 import SwiftUI
 import Combine
 
+struct Repository {
+    let user: String
+    let repository: String
+    let pullRequests: [PullRequest]
+}
+extension Repository: Identifiable {
+    var id: String {
+        return [user, repository].joined(separator: "/")
+    }
+}
+
 class ViewModel: ObservableObject {
 
     @AppStorage("repositorySettingList") private var repositorySettingList = Data()
@@ -35,7 +46,7 @@ class ViewModel: ObservableObject {
                                                    buttons: [(title: "OK",
                                                               handler: { self.showPreferences() })])
 
-    @Published var pullRequests = [PullRequest]()
+    @Published var fetchedData = [Repository]()
     @Published var shouldShowAlert = false
     @Published var shouldShowPreferences = false
     @Published var untilNextUpdateText = ""
@@ -91,17 +102,33 @@ class ViewModel: ObservableObject {
     @MainActor
     func update(withNotify: Bool) async {
         updateFetchTimer()
-        guard let decoded = repositories.first else {
-            return
+
+        let results = await withTaskGroup(of: Repository?.self, returning: [Repository].self) { group in
+            for repositorySetting in repositories {
+                group.addTask {
+                    await self.fetch(repositorySetting: repositorySetting, withNotify: withNotify)
+                }
+            }
+            var results = [Repository]()
+            for await repository in group {
+                if let repository {
+                    results.append(repository)
+                }
+            }
+            return results
         }
-        let token = decoded.token
-        let host = decoded.host
-        let user = decoded.user
-        let repository = decoded.repository
-        let labelFilter = decoded.labelFilter
+        fetchedData = results
+    }
+
+    private func fetch(repositorySetting: RepositorySetting, withNotify: Bool) async -> Repository? {
+        let token = repositorySetting.token
+        let host = repositorySetting.host
+        let user = repositorySetting.user
+        let repository = repositorySetting.repository
+        let labelFilter = repositorySetting.labelFilter
         do {
-            let previous = pullRequests
-            pullRequests = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
+            let previous = fetchedData.first { $0.user == repositorySetting.user && $0.repository == repositorySetting.repository }
+            let pullRequests = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
                 .filter { pull in
                     if showSelf {
                         return true
@@ -124,13 +151,14 @@ class ViewModel: ObservableObject {
                     }
                 }
             // TODO: showSelf切り替えとかを考慮したロジックにする
-            guard withNotify else {
-                return
+            if withNotify {
+                let newPullRequests = pullRequests.filter { pull in !(previous?.pullRequests ?? []).contains { $0.number == pull.number } }
+                newPullRequests.forEach {
+                    notifier.notify(pull: $0)
+                }
             }
-            let newPullRequests = pullRequests.filter { pull in !previous.contains { $0.number == pull.number } }
-            newPullRequests.forEach {
-                notifier.notify(pull: $0)
-            }
+
+            return Repository(user: user, repository: repository, pullRequests: pullRequests)
         } catch {
             if let error = error as? PullRequestNotifier.Error {
                 switch error {
@@ -142,6 +170,7 @@ class ViewModel: ObservableObject {
                     break
                 }
             }
+            return nil
         }
     }
 
