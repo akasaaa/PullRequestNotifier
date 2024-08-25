@@ -34,15 +34,16 @@ struct Preferences: View {
                 }
             })
             .pickerStyle(SegmentedPickerStyle())
-            .frame(width: 400, height:100, alignment: .center)
+            .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
             switch selectedMenu {
             case .github:
-                GitHubSettings()
+                GithubSettingList()
             case .local:
                 LocalSettings()
+                    .padding(.init(top: 16, leading: 0, bottom: 0, trailing: 0))
+                Spacer()
             }
-
-            Spacer()
+            
         }
     }
 }

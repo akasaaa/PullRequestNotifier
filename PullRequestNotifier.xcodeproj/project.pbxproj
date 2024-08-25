@@ -27,6 +27,7 @@
 		DF115C702C794C1300B7EF9C /* LocalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */; };
 		DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C712C794C3000B7EF9C /* PasswordField.swift */; };
 		DF115C742C794C5F00B7EF9C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C732C794C5F00B7EF9C /* ViewModel.swift */; };
+		DF115C762C7998DC00B7EF9C /* GithubSettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSettings.swift; sourceTree = "<group>"; };
 		DF115C712C794C3000B7EF9C /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		DF115C732C794C5F00B7EF9C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSettingList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				DF115C672C794BA100B7EF9C /* PullList.swift */,
 				DF115C692C794BC000B7EF9C /* PullRow.swift */,
 				DF115C6B2C794BDD00B7EF9C /* Preferences.swift */,
+				DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */,
 				DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */,
 				DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */,
 				DF115C712C794C3000B7EF9C /* PasswordField.swift */,
@@ -223,6 +226,7 @@
 				DF115C6E2C794BFF00B7EF9C /* GitHubSettings.swift in Sources */,
 				DF115C582C794A4300B7EF9C /* PullRequest.swift in Sources */,
 				DF115C622C794AC000B7EF9C /* Notifier.swift in Sources */,
+				DF115C762C7998DC00B7EF9C /* GithubSettingList.swift in Sources */,
 				DF115C5A2C794A5B00B7EF9C /* Review.swift in Sources */,
 				DF115C602C794A9A00B7EF9C /* Fetcher.swift in Sources */,
 				DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */,

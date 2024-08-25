@@ -31,7 +31,7 @@ struct RowData: PullRowApplicable {
 
 class ViewModel: ObservableObject {
 
-    @AppStorage("repositorySetting") private var repositorySetting = Data()
+    @AppStorage("repositorySettingList") private var repositorySettingList = Data()
     @AppStorage("currentUserAccount") private var currentUserAccount = ""
     @AppStorage("showSelf") private var showSelf = true
     @AppStorage("showApprove") private var showApprove = true
@@ -44,6 +44,12 @@ class ViewModel: ObservableObject {
     private var timerCancelable: AnyCancellable?
     private var nextUpdateSecondsTimerCancelable: AnyCancellable?
     private var nextUpdateDate: Date?
+
+    private let decoder = JSONDecoder()
+    private var repositories: [RepositorySetting] {
+        let decoded = try? decoder.decode([RepositorySetting].self, from: repositorySettingList)
+        return (decoded ?? []).sorted { $0.createdAt < $1.createdAt }
+    }
 
     private var pulls = [PullRequest]() {
         didSet {
@@ -76,7 +82,7 @@ class ViewModel: ObservableObject {
         setupNextUpdateSecondsTimer()
         updateFetchTimer()
     }
-    
+
     private func setupNextUpdateSecondsTimer() {
         nextUpdateSecondsTimerCancelable = Timer.publish(every: 0.1, on: .main, in: .default)
             .autoconnect()
@@ -112,8 +118,7 @@ class ViewModel: ObservableObject {
 
     func update(withNotify: Bool) async {
         updateFetchTimer()
-        let decoder = JSONDecoder()
-        guard let decoded = try? decoder.decode(RepositorySetting.self, from: repositorySetting) else {
+        guard let decoded = repositories.first else {
             return
         }
         let token = decoded.token
