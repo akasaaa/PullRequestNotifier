@@ -8,27 +8,6 @@
 import SwiftUI
 import Combine
 
-struct RowData: PullRowApplicable {
-    let number: Int
-    let title: String
-    let owner: String
-    let approvedUser: [String]
-    let currentUser: String
-
-    init?(_ pullRequest: PullRequest, currentUser: String) {
-        self.number = pullRequest.number
-        self.title = pullRequest.title ?? "-"
-        self.owner = pullRequest.user?.login ?? ""
-        self.approvedUser = pullRequest.reviews.compactMap { review in
-            guard review.state == "APPROVED" else {
-                return nil
-            }
-            return review.user?.login
-        }
-        self.currentUser = currentUser
-    }
-}
-
 class ViewModel: ObservableObject {
 
     @AppStorage("repositorySettingList") private var repositorySettingList = Data()
@@ -51,19 +30,12 @@ class ViewModel: ObservableObject {
         return (decoded ?? []).sorted { $0.createdAt < $1.createdAt }
     }
 
-    private var pulls = [PullRequest]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.rows = self.pulls.compactMap { RowData($0, currentUser: self.currentUserAccount) }
-            }
-        }
-    }
     private(set) lazy var invalidParameterAlert = (title: "Set Github informations.",
                                                    message: Optional<String>.none,
                                                    buttons: [(title: "OK",
                                                               handler: { self.showPreferences() })])
 
-    @Published var rows = [PullRowApplicable]()
+    @Published var pullRequests = [PullRequest]()
     @Published var shouldShowAlert = false
     @Published var shouldShowPreferences = false
     @Published var untilNextUpdateText = ""
@@ -116,6 +88,7 @@ class ViewModel: ObservableObject {
             })
     }
 
+    @MainActor
     func update(withNotify: Bool) async {
         updateFetchTimer()
         guard let decoded = repositories.first else {
@@ -127,8 +100,8 @@ class ViewModel: ObservableObject {
         let repository = decoded.repository
         let labelFilter = decoded.labelFilter
         do {
-            let previous = pulls
-            pulls = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
+            let previous = pullRequests
+            pullRequests = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
                 .filter { pull in
                     if showSelf {
                         return true
@@ -154,8 +127,8 @@ class ViewModel: ObservableObject {
             guard withNotify else {
                 return
             }
-            let newPulls = pulls.filter { pull in !previous.contains { $0.number == pull.number } }
-            newPulls.forEach {
+            let newPullRequests = pullRequests.filter { pull in !previous.contains { $0.number == pull.number } }
+            newPullRequests.forEach {
                 notifier.notify(pull: $0)
             }
         } catch {
@@ -172,9 +145,8 @@ class ViewModel: ObservableObject {
         }
     }
 
-    func didTap(_ row: PullRowApplicable) {
-        // イケてない
-        guard let pullRequest = pulls.first(where: { $0.number == row.number }), let url = pullRequest.url else {
+    func didTap(_ pullRequest: PullRequest) {
+        guard let url = pullRequest.url else {
             return
         }
         let workspace = NSWorkspace.shared

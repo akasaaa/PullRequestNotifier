@@ -25,10 +25,10 @@ struct PullList: View {
             }
             .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
             List {
-                ForEach(viewModel.rows, id: \.number) { row in
-                    PullRow(pull: row)
+                ForEach(viewModel.pullRequests, id: \.number) { pullRequest in
+                    PullRow(pullRequest: pullRequest)
                         .onTapGesture {
-                            viewModel.didTap(row)
+                            viewModel.didTap(pullRequest)
                         }
                 }
             }
