@@ -8,35 +8,21 @@
 import SwiftUI
 import Combine
 
-struct RowData: PullRowApplicable {
-    let number: Int
-    let title: String
-    let owner: String
-    let approvedUser: [String]
-    let currentUser: String
-
-    init?(_ pullRequest: PullRequest, currentUser: String) {
-        self.number = pullRequest.number
-        self.title = pullRequest.title ?? "-"
-        self.owner = pullRequest.user?.login ?? ""
-        self.approvedUser = pullRequest.reviews.compactMap { review in
-            guard review.state == "APPROVED" else {
-                return nil
-            }
-            return review.user?.login
-        }
-        self.currentUser = currentUser
+struct Repository {
+    let user: String
+    let repository: String
+    let pullRequests: [PullRequest]
+}
+extension Repository: Identifiable {
+    var id: String {
+        return [user, repository].joined(separator: "/")
     }
 }
 
 class ViewModel: ObservableObject {
 
-    @AppStorage("token") private var token = ""
-    @AppStorage("host") private var host = ""
-    @AppStorage("user") private var user = ""
-    @AppStorage("repository") private var repository = ""
+    @AppStorage("repositorySettingList") private var repositorySettingList = Data()
     @AppStorage("currentUserAccount") private var currentUserAccount = ""
-    @AppStorage("labelFilter") private var labelFilter = ""
     @AppStorage("showSelf") private var showSelf = true
     @AppStorage("showApprove") private var showApprove = true
     @AppStorage("startHour") private var startHour = 10
@@ -49,19 +35,18 @@ class ViewModel: ObservableObject {
     private var nextUpdateSecondsTimerCancelable: AnyCancellable?
     private var nextUpdateDate: Date?
 
-    private var pulls = [PullRequest]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.rows = self.pulls.compactMap { RowData($0, currentUser: self.currentUserAccount) }
-            }
-        }
+    private let decoder = JSONDecoder()
+    private var repositories: [RepositorySetting] {
+        let decoded = try? decoder.decode([RepositorySetting].self, from: repositorySettingList)
+        return (decoded ?? []).sorted { $0.createdAt < $1.createdAt }
     }
+
     private(set) lazy var invalidParameterAlert = (title: "Set Github informations.",
                                                    message: Optional<String>.none,
                                                    buttons: [(title: "OK",
                                                               handler: { self.showPreferences() })])
 
-    @Published var rows = [PullRowApplicable]()
+    @Published var fetchedData = [Repository]()
     @Published var shouldShowAlert = false
     @Published var shouldShowPreferences = false
     @Published var untilNextUpdateText = ""
@@ -80,14 +65,14 @@ class ViewModel: ObservableObject {
         setupNextUpdateSecondsTimer()
         updateFetchTimer()
     }
-    
+
     private func setupNextUpdateSecondsTimer() {
         nextUpdateSecondsTimerCancelable = Timer.publish(every: 0.1, on: .main, in: .default)
             .autoconnect()
             .sink { [weak self] current in
                 guard let self, let nextUpdateDate else { return }
                 let seconds = Int(nextUpdateDate.timeIntervalSince(current))
-                self.untilNextUpdateText = seconds == 0 ? "updating..." : "next: \(seconds))s"
+                self.untilNextUpdateText = seconds == 0 ? "updating..." : "next: \(seconds)s"
             }
     }
 
@@ -114,11 +99,36 @@ class ViewModel: ObservableObject {
             })
     }
 
+    @MainActor
     func update(withNotify: Bool) async {
         updateFetchTimer()
+
+        let results = await withTaskGroup(of: Repository?.self, returning: [Repository].self) { group in
+            for repositorySetting in repositories {
+                group.addTask {
+                    await self.fetch(repositorySetting: repositorySetting, withNotify: withNotify)
+                }
+            }
+            var results = [Repository]()
+            for await repository in group {
+                if let repository {
+                    results.append(repository)
+                }
+            }
+            return results
+        }
+        fetchedData = results
+    }
+
+    private func fetch(repositorySetting: RepositorySetting, withNotify: Bool) async -> Repository? {
+        let token = repositorySetting.token
+        let host = repositorySetting.host
+        let user = repositorySetting.user
+        let repository = repositorySetting.repository
+        let labelFilter = repositorySetting.labelFilter
         do {
-            let previous = pulls
-            pulls = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
+            let previous = fetchedData.first { $0.user == repositorySetting.user && $0.repository == repositorySetting.repository }
+            let pullRequests = try await fetcher.getPullRequests(host: host, user: user, repository: repository, token: token)
                 .filter { pull in
                     if showSelf {
                         return true
@@ -141,13 +151,14 @@ class ViewModel: ObservableObject {
                     }
                 }
             // TODO: showSelf切り替えとかを考慮したロジックにする
-            guard withNotify else {
-                return
+            if withNotify {
+                let newPullRequests = pullRequests.filter { pull in !(previous?.pullRequests ?? []).contains { $0.number == pull.number } }
+                newPullRequests.forEach {
+                    notifier.notify(pull: $0)
+                }
             }
-            let newPulls = pulls.filter { pull in !previous.contains { $0.number == pull.number } }
-            newPulls.forEach {
-                notifier.notify(pull: $0)
-            }
+
+            return Repository(user: user, repository: repository, pullRequests: pullRequests)
         } catch {
             if let error = error as? PullRequestNotifier.Error {
                 switch error {
@@ -159,12 +170,12 @@ class ViewModel: ObservableObject {
                     break
                 }
             }
+            return nil
         }
     }
 
-    func didTap(_ row: PullRowApplicable) {
-        // イケてない
-        guard let pullRequest = pulls.first(where: { $0.number == row.number }), let url = pullRequest.url else {
+    func didTap(_ pullRequest: PullRequest) {
+        guard let url = pullRequest.url else {
             return
         }
         let workspace = NSWorkspace.shared
