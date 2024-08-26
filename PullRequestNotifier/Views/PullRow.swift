@@ -38,7 +38,7 @@ struct PullRow: View {
                 let approved = pullRequest.reviews.filter { $0.state == "APPROVED" }
                 if !approved.isEmpty {
                     HStack(spacing: 4) {
-                        ForEach(approved) { review in
+                        ForEach(approved, id: \.user?.login) { review in
                             let user = Text(review.user?.login ?? "unknown user")
                             if review.user?.login == currentUserAccount {
                                 user.foregroundStyle(Color(hex6: 0x56d364))
