@@ -10,7 +10,8 @@ import SwiftUI
 struct GithubSettingList: View {
     
     private let decoder = JSONDecoder()
-    
+    private let encoder = JSONEncoder()
+
     @AppStorage("repositorySettingList") private var repositorySettingList = Data()
     
     var repositories: [RepositorySetting] {
@@ -19,9 +20,8 @@ struct GithubSettingList: View {
     }
     
     @State var selection: RepositorySetting.ID?
-    
     @State var shouldPresentDetail = false
-    
+
     var body: some View {
         VStack(alignment: .trailing) {
             Table(repositories, selection: $selection) {
@@ -38,8 +38,26 @@ struct GithubSettingList: View {
                     Text(repository.labelFilter)
                 }
             }
-            Button(selection == nil ? "追加" : "編集") {
-                shouldPresentDetail = true
+            .contextMenu(forSelectionType: RepositorySetting.ID.self) { ids in
+                Button("編集") {
+                    selection = ids.first
+                    shouldPresentDetail = true
+                }
+            }
+            HStack {
+                Button("追加") {
+                    shouldPresentDetail = true
+                }
+                Button("削除") {
+                    if let index = repositories.firstIndex(where: { $0.id == selection }) {
+                        var result = repositories
+                        result.remove(at: index)
+                        if let encoded = try? encoder.encode(result) {
+                            repositorySettingList = encoded
+                        }
+                    }
+                }
+                .disabled(selection == nil)
             }
             .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
         }
