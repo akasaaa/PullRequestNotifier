@@ -17,7 +17,8 @@ struct RepositorySettingList: View {
     }
     
     @State var selection: RepositorySettingModel.ID?
-    @State var shouldPresentDetail = false
+    @State var createNewRepositorySetting = false
+    @State var editRepositorySetting: RepositorySettingModel?
 
     var body: some View {
         VStack(alignment: .trailing) {
@@ -29,15 +30,19 @@ struct RepositorySettingList: View {
                     Text(repository.labelFilter)
                 }
             }
-            .contextMenu(forSelectionType: RepositorySettingModel.ID.self) { ids in
-                Button("編集") {
-                    selection = ids.first
-                    shouldPresentDetail = true
-                }
-            }
+            .contextMenu(
+                forSelectionType: RepositorySettingModel.ID.self,
+                menu: { ids in
+                    Button("編集") {
+                        editRepositorySetting = repositorySettingList.first { $0.id == ids.first }
+                    }
+                },
+                primaryAction: { ids in
+                    editRepositorySetting = repositorySettingList.first { $0.id == ids.first }
+                })
             HStack {
                 Button("追加") {
-                    shouldPresentDetail = true
+                    createNewRepositorySetting = true
                 }
                 Button("削除") {
                     if let index = repositorySettingList.firstIndex(where: { $0.id == selection }) {
@@ -50,9 +55,12 @@ struct RepositorySettingList: View {
             }
             .padding(.init(top: 0, leading: 0, bottom: 8, trailing: 16))
         }
-        .sheet(isPresented: $shouldPresentDetail) {
-            let setting = repositorySettingList.first { $0.id == selection }
-            RepositorySettings(setting: setting)
+        .sheet(isPresented: $createNewRepositorySetting) {
+            RepositorySettings(setting: nil)
+                .frame(width: 500, height: 300)
+        }
+        .sheet(item: $editRepositorySetting) { repositorySetting in
+            RepositorySettings(setting: repositorySetting)
                 .frame(width: 500, height: 300)
         }
     }
