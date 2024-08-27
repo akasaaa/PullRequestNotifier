@@ -22,12 +22,20 @@
 		DF115C682C794BA100B7EF9C /* PullList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C672C794BA100B7EF9C /* PullList.swift */; };
 		DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C692C794BC000B7EF9C /* PullRow.swift */; };
 		DF115C6C2C794BDD00B7EF9C /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6B2C794BDD00B7EF9C /* Preferences.swift */; };
-		DF115C6E2C794BFF00B7EF9C /* GitHubSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */; };
+		DF115C6E2C794BFF00B7EF9C /* RepositorySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6D2C794BFE00B7EF9C /* RepositorySettings.swift */; };
 		DF115C702C794C1300B7EF9C /* LocalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */; };
 		DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C712C794C3000B7EF9C /* PasswordField.swift */; };
 		DF115C742C794C5F00B7EF9C /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C732C794C5F00B7EF9C /* ViewModel.swift */; };
-		DF115C762C7998DC00B7EF9C /* GithubSettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */; };
+		DF115C762C7998DC00B7EF9C /* RepositorySettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C752C7998DC00B7EF9C /* RepositorySettingList.swift */; };
 		DF115C7B2C7B3DD700B7EF9C /* Branch.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF115C7A2C7B3DD700B7EF9C /* Branch.swift */; };
+		DFB0AB3D2C7CAFED002D56C4 /* RepositorySettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB3C2C7CAFED002D56C4 /* RepositorySettingModel.swift */; };
+		DFB0AB3F2C7CB103002D56C4 /* AccountSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB3E2C7CB103002D56C4 /* AccountSettingModel.swift */; };
+		DFB0AB412C7CB161002D56C4 /* LocalSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB402C7CB161002D56C4 /* LocalSettingModel.swift */; };
+		DFB0AB432C7CB84E002D56C4 /* Encodable+Encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB422C7CB84E002D56C4 /* Encodable+Encode.swift */; };
+		DFB0AB462C7CB9B1002D56C4 /* Data+Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB452C7CB9B1002D56C4 /* Data+Decode.swift */; };
+		DFB0AB482C7CBF53002D56C4 /* AccountSettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB472C7CBF53002D56C4 /* AccountSettingList.swift */; };
+		DFB0AB4A2C7CBF69002D56C4 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */; };
+		DFB0AB4C2C7CC9DD002D56C4 /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,12 +56,20 @@
 		DF115C672C794BA100B7EF9C /* PullList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullList.swift; sourceTree = "<group>"; };
 		DF115C692C794BC000B7EF9C /* PullRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRow.swift; sourceTree = "<group>"; };
 		DF115C6B2C794BDD00B7EF9C /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSettings.swift; sourceTree = "<group>"; };
+		DF115C6D2C794BFE00B7EF9C /* RepositorySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySettings.swift; sourceTree = "<group>"; };
 		DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSettings.swift; sourceTree = "<group>"; };
 		DF115C712C794C3000B7EF9C /* PasswordField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordField.swift; sourceTree = "<group>"; };
 		DF115C732C794C5F00B7EF9C /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSettingList.swift; sourceTree = "<group>"; };
+		DF115C752C7998DC00B7EF9C /* RepositorySettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySettingList.swift; sourceTree = "<group>"; };
 		DF115C7A2C7B3DD700B7EF9C /* Branch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Branch.swift; sourceTree = "<group>"; };
+		DFB0AB3C2C7CAFED002D56C4 /* RepositorySettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySettingModel.swift; sourceTree = "<group>"; };
+		DFB0AB3E2C7CB103002D56C4 /* AccountSettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingModel.swift; sourceTree = "<group>"; };
+		DFB0AB402C7CB161002D56C4 /* LocalSettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSettingModel.swift; sourceTree = "<group>"; };
+		DFB0AB422C7CB84E002D56C4 /* Encodable+Encode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Encode.swift"; sourceTree = "<group>"; };
+		DFB0AB452C7CB9B1002D56C4 /* Data+Decode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Decode.swift"; sourceTree = "<group>"; };
+		DFB0AB472C7CBF53002D56C4 /* AccountSettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingList.swift; sourceTree = "<group>"; };
+		DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
+		DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +107,7 @@
 				DF115C652C794B8200B7EF9C /* Views */,
 				DF115C662C794B8D00B7EF9C /* ViewModels */,
 				DF115C4F2C7949A900B7EF9C /* Models */,
+				DFB0AB442C7CB90C002D56C4 /* Extensions */,
 				DF115C442C79493400B7EF9C /* Assets.xcassets */,
 				DF115C492C79493400B7EF9C /* PullRequestNotifier.entitlements */,
 				DF115C462C79493400B7EF9C /* Preview Content */,
@@ -109,10 +126,12 @@
 		DF115C4F2C7949A900B7EF9C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DFB0AB3B2C7CAFD5002D56C4 /* Settings */,
 				DF115C502C7949B200B7EF9C /* Entities */,
 				DF115C5D2C794A7E00B7EF9C /* Error.swift */,
 				DF115C5F2C794A9A00B7EF9C /* Fetcher.swift */,
 				DF115C612C794AC000B7EF9C /* Notifier.swift */,
+				DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -136,8 +155,10 @@
 				DF115C672C794BA100B7EF9C /* PullList.swift */,
 				DF115C692C794BC000B7EF9C /* PullRow.swift */,
 				DF115C6B2C794BDD00B7EF9C /* Preferences.swift */,
-				DF115C752C7998DC00B7EF9C /* GithubSettingList.swift */,
-				DF115C6D2C794BFE00B7EF9C /* GitHubSettings.swift */,
+				DFB0AB472C7CBF53002D56C4 /* AccountSettingList.swift */,
+				DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */,
+				DF115C752C7998DC00B7EF9C /* RepositorySettingList.swift */,
+				DF115C6D2C794BFE00B7EF9C /* RepositorySettings.swift */,
 				DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */,
 				DF115C712C794C3000B7EF9C /* PasswordField.swift */,
 			);
@@ -150,6 +171,25 @@
 				DF115C732C794C5F00B7EF9C /* ViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		DFB0AB3B2C7CAFD5002D56C4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DFB0AB3E2C7CB103002D56C4 /* AccountSettingModel.swift */,
+				DFB0AB3C2C7CAFED002D56C4 /* RepositorySettingModel.swift */,
+				DFB0AB402C7CB161002D56C4 /* LocalSettingModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DFB0AB442C7CB90C002D56C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DFB0AB422C7CB84E002D56C4 /* Encodable+Encode.swift */,
+				DFB0AB452C7CB9B1002D56C4 /* Data+Decode.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,22 +263,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF115C642C794B3600B7EF9C /* AppDelegate.swift in Sources */,
-				DF115C6E2C794BFF00B7EF9C /* GitHubSettings.swift in Sources */,
+				DF115C6E2C794BFF00B7EF9C /* RepositorySettings.swift in Sources */,
+				DFB0AB412C7CB161002D56C4 /* LocalSettingModel.swift in Sources */,
+				DFB0AB482C7CBF53002D56C4 /* AccountSettingList.swift in Sources */,
 				DF115C582C794A4300B7EF9C /* PullRequest.swift in Sources */,
 				DF115C622C794AC000B7EF9C /* Notifier.swift in Sources */,
-				DF115C762C7998DC00B7EF9C /* GithubSettingList.swift in Sources */,
+				DF115C762C7998DC00B7EF9C /* RepositorySettingList.swift in Sources */,
 				DF115C5A2C794A5B00B7EF9C /* Review.swift in Sources */,
 				DF115C602C794A9A00B7EF9C /* Fetcher.swift in Sources */,
 				DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */,
+				DFB0AB4A2C7CBF69002D56C4 /* AccountSettings.swift in Sources */,
 				DF115C5C2C794A6D00B7EF9C /* User.swift in Sources */,
 				DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */,
+				DFB0AB462C7CB9B1002D56C4 /* Data+Decode.swift in Sources */,
+				DFB0AB432C7CB84E002D56C4 /* Encodable+Encode.swift in Sources */,
 				DF115C742C794C5F00B7EF9C /* ViewModel.swift in Sources */,
+				DFB0AB4C2C7CC9DD002D56C4 /* AppStorageKey.swift in Sources */,
 				DF115C7B2C7B3DD700B7EF9C /* Branch.swift in Sources */,
 				DF115C6C2C794BDD00B7EF9C /* Preferences.swift in Sources */,
 				DF115C702C794C1300B7EF9C /* LocalSettings.swift in Sources */,
+				DFB0AB3D2C7CAFED002D56C4 /* RepositorySettingModel.swift in Sources */,
 				DF115C542C7949F000B7EF9C /* Label.swift in Sources */,
 				DF115C562C794A1700B7EF9C /* Milestone.swift in Sources */,
 				DF115C5E2C794A7E00B7EF9C /* Error.swift in Sources */,
+				DFB0AB3F2C7CB103002D56C4 /* AccountSettingModel.swift in Sources */,
 				DF115C682C794BA100B7EF9C /* PullList.swift in Sources */,
 				DF115C412C79493200B7EF9C /* PullRequestNotifierApp.swift in Sources */,
 			);
