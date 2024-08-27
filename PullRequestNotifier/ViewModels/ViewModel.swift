@@ -135,27 +135,27 @@ class ViewModel: ObservableObject {
         do {
             let previous = fetchedSections.first { $0.repositorySetting.id == repositorySetting.id }
             let pullRequests = try await fetcher.getPullRequests(host: host, repository: repository, token: token)
-//                .filter { pull in
-//                    if showSelf {
-//                        return true
-//                    } else {
-//                        return pull.user?.login != currentUserAccount
-//                    }
-//                }
-//                .filter { pull in
-//                    if showApprove {
-//                        return true
-//                    } else {
-//                        return !pull.reviews.contains { $0.user?.login == currentUserAccount && $0.state == "APPROVED" }
-//                    }
-//                }
-//                .filter { pull in
-//                    if labelFilter.isEmpty {
-//                        return true
-//                    } else {
-//                        return pull.labels?.contains { $0.name == labelFilter } ?? false
-//                    }
-//                }
+                .filter { pull in
+                    if repositorySetting.showSelf {
+                        return true
+                    } else {
+                        return pull.user?.login != accountSetting.userName
+                    }
+                }
+                .filter { pull in
+                    if repositorySetting.showApprove {
+                        return true
+                    } else {
+                        return !pull.reviews.contains { $0.user?.login == accountSetting.userName && $0.state == "APPROVED" }
+                    }
+                }
+                .filter { pull in
+                    if labelFilter.isEmpty {
+                        return true
+                    } else {
+                        return pull.labels?.contains { $0.name == labelFilter } ?? false
+                    }
+                }
             // TODO: showSelf切り替えとかを考慮したロジックにする
             if withNotify {
                 let newPullRequests = pullRequests.filter { pull in !(previous?.pullRequests ?? []).contains { $0.number == pull.number } }
