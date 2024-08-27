@@ -48,6 +48,7 @@ struct Preferences: View {
             }
             
         }
+        .frame(width: 600)
     }
 }
 
