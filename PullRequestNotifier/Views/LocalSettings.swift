@@ -25,14 +25,16 @@ struct LocalSettings: View {
                         ForEach(data, id: \.hashValue) {
                             Text("\($0)").tag($0)
                         }
-                    }.labelsHidden()
+                    }
+                    .labelsHidden()
                     Text("時 〜 ")
                     Picker("", selection: $endHour) {
                         let data = ((startHour + 1)...24).map { $0 }
                         ForEach(data, id: \.hashValue) {
                             Text("\($0)").tag($0)
                         }
-                    }.labelsHidden()
+                    }
+                    .labelsHidden()
                     Text("時")
                     Spacer()
                 }

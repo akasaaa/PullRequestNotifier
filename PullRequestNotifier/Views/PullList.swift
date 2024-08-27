@@ -27,7 +27,7 @@ struct PullList: View {
                 Text(viewModel.untilNextUpdateText)
                 Spacer()
                 Button(action: {
-                    viewModel.showPreferences()
+                    showPreferences()
                 }) {
                     Image(systemName: "gearshape")
                 }
