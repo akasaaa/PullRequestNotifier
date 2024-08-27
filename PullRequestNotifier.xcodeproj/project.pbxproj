@@ -36,6 +36,7 @@
 		DFB0AB482C7CBF53002D56C4 /* AccountSettingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB472C7CBF53002D56C4 /* AccountSettingList.swift */; };
 		DFB0AB4A2C7CBF69002D56C4 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */; };
 		DFB0AB4C2C7CC9DD002D56C4 /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */; };
+		DFB0AB502C7E0CA3002D56C4 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB4F2C7E0CA3002D56C4 /* SoundEffect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		DFB0AB472C7CBF53002D56C4 /* AccountSettingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingList.swift; sourceTree = "<group>"; };
 		DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
 		DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKey.swift; sourceTree = "<group>"; };
+		DFB0AB4F2C7E0CA3002D56C4 /* SoundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				DF115C5F2C794A9A00B7EF9C /* Fetcher.swift */,
 				DF115C612C794AC000B7EF9C /* Notifier.swift */,
 				DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */,
+				DFB0AB4F2C7E0CA3002D56C4 /* SoundEffect.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				DF115C642C794B3600B7EF9C /* AppDelegate.swift in Sources */,
 				DF115C6E2C794BFF00B7EF9C /* RepositorySettings.swift in Sources */,
 				DFB0AB412C7CB161002D56C4 /* LocalSettingModel.swift in Sources */,
+				DFB0AB502C7E0CA3002D56C4 /* SoundEffect.swift in Sources */,
 				DFB0AB482C7CBF53002D56C4 /* AccountSettingList.swift in Sources */,
 				DF115C582C794A4300B7EF9C /* PullRequest.swift in Sources */,
 				DF115C622C794AC000B7EF9C /* Notifier.swift in Sources */,

@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.button?.image = image
         statusItem?.button?.action = #selector(onClick)
         statusItem?.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
-
+        _ = SoundEffect.systemSoundEffects
         // StatusBarのアイコン座標が取れるまで時間がかかる。とりあえず0.5s待つ
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             if let button = self.statusItem?.button {

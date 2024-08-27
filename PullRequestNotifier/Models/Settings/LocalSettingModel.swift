@@ -11,4 +11,5 @@ struct LocalSettingModel: Codable {
     var startHour = 10
     var endHour = 19
     var fetchInterval = 300
+    var notificationSoundName: String?
 }
