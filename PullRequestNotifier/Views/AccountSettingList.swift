@@ -22,7 +22,8 @@ struct AccountSettingList: View {
     }
 
     @State var selection: AccountSettingModel.ID?
-    @State var shouldPresentDetail = false
+    @State var createNewAccountSetting = false
+    @State var editAccountSetting: AccountSettingModel?
     @State var shouldShowDestructiveAlert = false
 
     var body: some View {
@@ -35,15 +36,19 @@ struct AccountSettingList: View {
                     Text(accountSettingModel.userName)
                 }
             }
-            .contextMenu(forSelectionType: AccountSettingModel.ID.self) { ids in
-                Button("編集") {
-                    selection = ids.first
-                    shouldPresentDetail = true
-                }
-            }
+            .contextMenu(
+                forSelectionType: AccountSettingModel.ID.self,
+                menu: { ids in
+                    Button("編集") {
+                        editAccountSetting = accountSettingList.first { $0.id == ids.first }
+                    }
+                },
+                primaryAction: { ids in
+                    editAccountSetting = accountSettingList.first { $0.id == ids.first }
+                })
             HStack {
                 Button("追加") {
-                    shouldPresentDetail = true
+                    createNewAccountSetting = true
                 }
                 Button("削除") {
                     if isUsing() {
@@ -62,11 +67,14 @@ struct AccountSettingList: View {
                 delete()
             }
         }
-         .sheet(isPresented: $shouldPresentDetail) {
-            let accountSettingModel = accountSettingList.first { $0.id == selection }
-            AccountSettings(setting: accountSettingModel)
+         .sheet(isPresented: $createNewAccountSetting) {
+            AccountSettings(setting: nil)
                 .frame(width: 500, height: 300)
         }
+         .sheet(item: $editAccountSetting) { accountSetting in
+             AccountSettings(setting: accountSetting)
+                 .frame(width: 500, height: 300)
+         }
     }
 
     private func isUsing() -> Bool {
