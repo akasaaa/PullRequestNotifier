@@ -189,7 +189,7 @@ class ViewModel: ObservableObject {
         workspace.open(url)
     }
 
-    private func showPreferences() {
+    func showPreferences() {
         preferenceWindow.center()
         preferenceWindow.makeKeyAndOrderFront(nil)
         NSApp.windows.forEach { if ($0.canBecomeMain) {$0.orderFrontRegardless() } }
