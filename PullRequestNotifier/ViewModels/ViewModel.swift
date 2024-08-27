@@ -57,6 +57,7 @@ class ViewModel: ObservableObject {
     init(fetcher: FetcherProtocol = Fetcher()) {
         self.fetcher = fetcher
         setup()
+//        $repositorySettingListData
     }
 
     private func setup() {

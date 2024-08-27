@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PullList: View {
 
+    @AppStorage(AppStorageKey.accountSettingListData) private var accountSettingListData = Data()
+    @AppStorage(AppStorageKey.repositorySettingListData) private var repositorySettingListData = Data()
+    @AppStorage(AppStorageKey.localSettingData) private var localSettingData = Data()
     @StateObject var viewModel = ViewModel()
 
     var body: some View {
@@ -45,7 +48,13 @@ struct PullList: View {
                     Button(button.title, action: button.handler)
                 }
             }
-        }.background {
+        }
+        .onChange(of: [accountSettingListData, repositorySettingListData, localSettingData]) {
+            Task {
+                await viewModel.update(withNotify: true)
+            }
+        }
+        .background {
             Color(NSColor.windowBackgroundColor)
         }
     }
