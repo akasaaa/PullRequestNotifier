@@ -57,7 +57,6 @@ class ViewModel: ObservableObject {
     init(fetcher: FetcherProtocol = Fetcher()) {
         self.fetcher = fetcher
         setup()
-//        $repositorySettingListData
     }
 
     private func setup() {
@@ -161,7 +160,7 @@ class ViewModel: ObservableObject {
             if withNotify {
                 let newPullRequests = pullRequests.filter { pull in !(previous?.pullRequests ?? []).contains { $0.number == pull.number } }
                 newPullRequests.forEach {
-                    notifier.notify(pull: $0)
+                    notifier.notify(pull: $0, soundName: localSetting.notificationSoundName)
                 }
             }
 

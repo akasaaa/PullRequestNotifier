@@ -20,16 +20,19 @@ struct Notifier {
 
     func authorize() {
         notificationCenter.requestAuthorization(options: [.sound, .alert, .badge]) { authorized, error in
-            print("authorized: \(authorized)")
             error.map { print("error: \($0)") }
         }
     }
 
-    func notify(pull: PullRequest) {
+    func notify(pull: PullRequest, soundName: String?) {
         DispatchQueue.main.async {
             let content = UNMutableNotificationContent()
             content.title = "#" + pull.number.description
             content.subtitle = pull.title ?? ""
+            content.interruptionLevel = .active
+            if let soundName {
+                content.sound = UNNotificationSound(named: .init(soundName))
+            }
             // TODO: Identifier以外で渡す方法があればそちらを利用したい。userInfoに設定すると通知が出なくなる。
             let urlString = pull.url?.absoluteString ?? ""
             let request = UNNotificationRequest(identifier: urlString, content: content, trigger: nil)
