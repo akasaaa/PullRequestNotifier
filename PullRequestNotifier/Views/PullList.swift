@@ -25,8 +25,14 @@ struct PullList: View {
                     Image(systemName: "arrow.clockwise")
                 }
                 Text(viewModel.untilNextUpdateText)
+                Spacer()
+                Button(action: {
+                    showPreferences()
+                }) {
+                    Image(systemName: "gearshape")
+                }
             }
-            .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
+            .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 08))
             List {
                 ForEach(viewModel.fetchedSections) { section in
                     Section(section.repositorySetting.repository) {

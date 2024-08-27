@@ -74,9 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @objc private func openPreferencesWindow() {
-        preferenceWindow.center()
-        preferenceWindow.makeKeyAndOrderFront(nil)
-        NSApp.windows.forEach { if ($0.canBecomeMain) {$0.orderFrontRegardless() } }
+        showPreferences()
     }
 
     private func showPopover(for barButton: NSStatusBarButton) {

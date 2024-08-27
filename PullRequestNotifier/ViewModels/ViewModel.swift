@@ -47,7 +47,7 @@ class ViewModel: ObservableObject {
     private(set) lazy var invalidParameterAlert = (title: "Set Github informations.",
                                                    message: Optional<String>.none,
                                                    buttons: [(title: "OK",
-                                                              handler: { self.showPreferences() })])
+                                                              handler: { showPreferences() })])
 
     @Published var fetchedSections = [FetchedSection]()
     @Published var shouldShowAlert = false
@@ -187,12 +187,6 @@ class ViewModel: ObservableObject {
         }
         let workspace = NSWorkspace.shared
         workspace.open(url)
-    }
-
-    private func showPreferences() {
-        preferenceWindow.center()
-        preferenceWindow.makeKeyAndOrderFront(nil)
-        NSApp.windows.forEach { if ($0.canBecomeMain) {$0.orderFrontRegardless() } }
     }
 }
 
