@@ -20,11 +20,12 @@ let preferenceWindow: NSWindow = {
 struct Preferences: View {
 
     enum PreferencesMenu: String, CaseIterable  {
-        case github = "GitHub Settings"
+        case account = "Account Settings"
+        case repository = "Repository Settings"
         case local = "Local Settings"
     }
 
-    @State var selectedMenu = PreferencesMenu.github
+    @State var selectedMenu = PreferencesMenu.account
 
     var body: some View {
         VStack {
@@ -36,8 +37,10 @@ struct Preferences: View {
             .pickerStyle(SegmentedPickerStyle())
             .padding(.init(top: 16, leading: 16, bottom: 8, trailing: 16))
             switch selectedMenu {
-            case .github:
-                GithubSettingList()
+            case .account:
+                AccountSettingList()
+            case .repository:
+                RepositorySettingList()
             case .local:
                 LocalSettings()
                     .padding(.init(top: 16, leading: 0, bottom: 0, trailing: 0))

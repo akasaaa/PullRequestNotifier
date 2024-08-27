@@ -9,6 +9,9 @@ import SwiftUI
 
 struct PullList: View {
 
+    @AppStorage(AppStorageKey.accountSettingListData) private var accountSettingListData = Data()
+    @AppStorage(AppStorageKey.repositorySettingListData) private var repositorySettingListData = Data()
+    @AppStorage(AppStorageKey.localSettingData) private var localSettingData = Data()
     @StateObject var viewModel = ViewModel()
 
     var body: some View {
@@ -25,10 +28,11 @@ struct PullList: View {
             }
             .padding(EdgeInsets(top: 8, leading: 8, bottom: 0, trailing: 0))
             List {
-                ForEach(viewModel.fetchedData) { repository in
-                    Section(repository.id) {
-                        ForEach(repository.pullRequests, id: \.number) { pullRequest in
-                            PullRow(pullRequest: pullRequest)
+                ForEach(viewModel.fetchedSections) { section in
+                    Section(section.repositorySetting.repository) {
+                        ForEach(section.pullRequests, id: \.number) { pullRequest in
+                            PullRow(accountSetting: section.accountSetting,
+                                    pullRequest: pullRequest)
                                 .onTapGesture {
                                     viewModel.didTap(pullRequest)
                                 }
@@ -44,7 +48,13 @@ struct PullList: View {
                     Button(button.title, action: button.handler)
                 }
             }
-        }.background {
+        }
+        .onChange(of: [accountSettingListData, repositorySettingListData, localSettingData]) {
+            Task {
+                await viewModel.update(withNotify: true)
+            }
+        }
+        .background {
             Color(NSColor.windowBackgroundColor)
         }
     }

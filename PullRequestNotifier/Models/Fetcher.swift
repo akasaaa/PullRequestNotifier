@@ -8,15 +8,15 @@
 import Foundation
 
 protocol FetcherProtocol {
-    func getPullRequests(host: String, user: String, repository: String, token: String) async throws -> [PullRequest]
+    func getPullRequests(host: String, repository: String, token: String) async throws -> [PullRequest]
 }
 
 struct Fetcher: FetcherProtocol {
 
-    func getPullRequests(host: String, user: String, repository: String, token: String) async throws -> [PullRequest] {
+    func getPullRequests(host: String, repository: String, token: String) async throws -> [PullRequest] {
 
-        guard [host, user, repository, token].allSatisfy({ !$0.isEmpty }),
-              let url = URL(string: "https://\(host)/repos/\(user)/\(repository)/pulls?state=open") else {
+        guard [host, repository, token].allSatisfy({ !$0.isEmpty }),
+              let url = URL(string: "https://\(host)/repos/\(repository)/pulls?state=open") else {
             throw Error.invalidParameters
         }
         var request = URLRequest(url: url)
@@ -32,7 +32,7 @@ struct Fetcher: FetcherProtocol {
         try await withThrowingTaskGroup(of: (Int, [Review]).self) { group in
             pulls.enumerated().forEach { offset, element in
                 group.addTask {
-                    (offset, try await self.getReview(host: host, user: user, repository: repository, token: token, number: element.number))
+                    (offset, try await self.getReview(host: host, repository: repository, token: token, number: element.number))
                 }
             }
             for try await (index, reviews) in group {
@@ -43,10 +43,10 @@ struct Fetcher: FetcherProtocol {
         return pulls
     }
 
-    func getReview(host: String, user: String, repository: String, token: String, number: Int) async throws -> [Review] {
+    func getReview(host: String, repository: String, token: String, number: Int) async throws -> [Review] {
 
-        guard [host, user, repository, token].allSatisfy({ !$0.isEmpty }),
-              let url = URL(string: "https://\(host)/repos/\(user)/\(repository)/pulls/\(number)/reviews") else {
+        guard [host, repository, token].allSatisfy({ !$0.isEmpty }),
+              let url = URL(string: "https://\(host)/repos/\(repository)/pulls/\(number)/reviews") else {
             throw Error.invalidParameters
         }
         var request = URLRequest(url: url)

@@ -9,9 +9,8 @@ import SwiftUI
 
 struct PullRow: View {
 
+    let accountSetting: AccountSettingModel
     let pullRequest: PullRequest
-
-    @AppStorage("currentUserAccount") private var currentUserAccount = ""
 
     var body: some View {
         HStack(alignment: .top) {
@@ -20,7 +19,7 @@ struct PullRow: View {
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.leading)
                     .frame(width: 50)
-                if pullRequest.user?.login == currentUserAccount {
+                if pullRequest.user?.login == accountSetting.userName {
                     text.foregroundStyle(Color(hex6: 0x56d364))
                 } else {
                     text
@@ -30,7 +29,7 @@ struct PullRow: View {
                 let title = Text(pullRequest.title ?? "-")
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.leading)
-                if pullRequest.user?.login == currentUserAccount {
+                if pullRequest.user?.login == accountSetting.userName {
                     title.foregroundStyle(Color(hex6: 0x56d364))
                 } else {
                     title
@@ -40,7 +39,7 @@ struct PullRow: View {
                     HStack(spacing: 4) {
                         ForEach(approved, id: \.user?.login) { review in
                             let user = Text(review.user?.login ?? "unknown user")
-                            if review.user?.login == currentUserAccount {
+                            if review.user?.login == accountSetting.userName {
                                 user.foregroundStyle(Color(hex6: 0x56d364))
                             } else {
                                 user

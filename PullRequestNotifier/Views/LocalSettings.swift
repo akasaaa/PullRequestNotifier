@@ -9,40 +9,14 @@ import SwiftUI
 
 struct LocalSettings: View {
 
-    @AppStorage("currentUserAccount") private var currentUserAccount = ""
-    @AppStorage("showSelf") private var showSelf = true
-    @AppStorage("showApprove") private var showApprove = true
-    @AppStorage("startHour") private var startHour = 10
-    @AppStorage("endHour") private var endHour = 19
-    @AppStorage("fetchInterval") private var fetchInterval = 300
+    @AppStorage(AppStorageKey.localSettingData) private var localSettingData = Data()
+
+    @State private var startHour = 10
+    @State private var endHour = 19
+    @State private var fetchInterval = 300
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 16) {
-            HStack {
-                Text("userName: ")
-                TextField("e.g. akasaaa", text: $currentUserAccount)
-                    .frame(width: 180)
-            }
-            HStack {
-                Text("show self pull request: ")
-                HStack {
-                    Toggle(isOn: $showSelf) {}
-                        .toggleStyle(.switch)
-                        .labelsHidden()
-                    Spacer()
-                }
-                .frame(width: 180)
-            }
-            HStack {
-                Text("show already approved pull request: ")
-                HStack {
-                    Toggle(isOn: $showApprove) {}
-                        .toggleStyle(.switch)
-                        .labelsHidden()
-                    Spacer()
-                }
-                .frame(width: 180)
-            }
             HStack {
                 Text("business hours: ")
                 HStack {
@@ -80,6 +54,16 @@ struct LocalSettings: View {
                 }
                 .frame(width: 180)
             }
+        }
+        .onAppear {
+            if let decoded = localSettingData.decoded(LocalSettingModel.self) {
+                self.startHour = decoded.startHour
+                self.endHour = decoded.endHour
+                self.fetchInterval = decoded.fetchInterval
+            }
+        }
+        .onChange(of: [startHour, endHour, fetchInterval]) {
+            localSettingData = LocalSettingModel(startHour: startHour, endHour: endHour, fetchInterval: fetchInterval).encoded
         }
         .frame(width: 500)
     }
