@@ -12,6 +12,38 @@ struct FetchedSection {
     let repositorySetting: RepositorySettingModel
     let accountSetting: AccountSettingModel
     let pullRequests: [PullRequest]
+
+    func filtered() -> [PullRequest] {
+        return pullRequests
+            .filter { pull in
+                if repositorySetting.hideSelfPullRequest {
+                    return pull.user?.login != accountSetting.userName
+                } else {
+                    return true
+                }
+            }
+            .filter { pull in
+                if repositorySetting.hideDraftPullRequest {
+                    return !pull.draft
+                } else {
+                    return true
+                }
+            }
+            .filter { pull in
+                if repositorySetting.displayLabels.isEmpty {
+                    return true
+                } else {
+                    return pull.labels?.contains { label in repositorySetting.displayLabels.contains { $0 == label.name } } ?? false
+                }
+            }
+            .filter { pull in
+                if repositorySetting.displayMilestones.isEmpty {
+                    return true
+                } else {
+                    return repositorySetting.displayMilestones.contains { $0 == pull.milestone?.title }
+                }
+            }
+    }
 }
 
 extension FetchedSection: Identifiable {
@@ -131,34 +163,13 @@ class ViewModel: ObservableObject {
         let token = accountSetting.token
         let host = accountSetting.host
         let repository = repositorySetting.repository
-        let labelFilter = repositorySetting.labelFilter
         do {
-            let previous = fetchedSections.first { $0.repositorySetting.id == repositorySetting.id }
+            let previousSection = fetchedSections.first { $0.repositorySetting.id == repositorySetting.id }
             let pullRequests = try await fetcher.getPullRequests(host: host, repository: repository, token: token)
-                .filter { pull in
-                    if repositorySetting.showSelf {
-                        return true
-                    } else {
-                        return pull.user?.login != accountSetting.userName
-                    }
-                }
-                .filter { pull in
-                    if repositorySetting.showApprove {
-                        return true
-                    } else {
-                        return !pull.reviews.contains { $0.user?.login == accountSetting.userName && $0.state == "APPROVED" }
-                    }
-                }
-                .filter { pull in
-                    if labelFilter.isEmpty {
-                        return true
-                    } else {
-                        return pull.labels?.contains { $0.name == labelFilter } ?? false
-                    }
-                }
-            // TODO: showSelf切り替えとかを考慮したロジックにする
+
+            let newSection = FetchedSection(repositorySetting: repositorySetting, accountSetting: accountSetting, pullRequests: pullRequests)
             if withNotify {
-                let newPullRequests = pullRequests.filter { pull in !(previous?.pullRequests ?? []).contains { $0.number == pull.number } }
+                let newPullRequests = newSection.filtered().filter { pull in !(previousSection?.filtered() ?? []).contains { $0.number == pull.number } }
                 newPullRequests.forEach {
                     notifier.notify(pull: $0, soundName: localSetting.notificationSoundName)
                 }

@@ -12,13 +12,14 @@ struct PullRequest: Codable {
     let url: URL?
     let title: String?
     let body: String?
-    let assignee: User?
+    let assignees: [User]?
     let milestone: Milestone?
     let user: User?
     let number: Int
     let labels: [Label]?
     let head: Branch?
     let base: Branch?
+    let draft: Bool
 
     var reviews = [Review]()
 
@@ -27,12 +28,13 @@ struct PullRequest: Codable {
         case url = "html_url"
         case title
         case body
-        case assignee
+        case assignees
         case milestone
         case user
         case number
         case labels
         case head
         case base
+        case draft
     }
 }
