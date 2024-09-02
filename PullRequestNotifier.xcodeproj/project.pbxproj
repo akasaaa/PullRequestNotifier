@@ -37,6 +37,7 @@
 		DFB0AB4A2C7CBF69002D56C4 /* AccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */; };
 		DFB0AB4C2C7CC9DD002D56C4 /* AppStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */; };
 		DFB0AB502C7E0CA3002D56C4 /* SoundEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB4F2C7E0CA3002D56C4 /* SoundEffect.swift */; };
+		DFB0AB542C82D359002D56C4 /* TextListEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB0AB532C82D359002D56C4 /* TextListEditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		DFB0AB492C7CBF69002D56C4 /* AccountSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettings.swift; sourceTree = "<group>"; };
 		DFB0AB4B2C7CC9DD002D56C4 /* AppStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKey.swift; sourceTree = "<group>"; };
 		DFB0AB4F2C7E0CA3002D56C4 /* SoundEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundEffect.swift; sourceTree = "<group>"; };
+		DFB0AB532C82D359002D56C4 /* TextListEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextListEditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				DF115C6D2C794BFE00B7EF9C /* RepositorySettings.swift */,
 				DF115C6F2C794C1300B7EF9C /* LocalSettings.swift */,
 				DF115C712C794C3000B7EF9C /* PasswordField.swift */,
+				DFB0AB532C82D359002D56C4 /* TextListEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				DF115C5A2C794A5B00B7EF9C /* Review.swift in Sources */,
 				DF115C602C794A9A00B7EF9C /* Fetcher.swift in Sources */,
 				DF115C6A2C794BC000B7EF9C /* PullRow.swift in Sources */,
+				DFB0AB542C82D359002D56C4 /* TextListEditView.swift in Sources */,
 				DFB0AB4A2C7CBF69002D56C4 /* AccountSettings.swift in Sources */,
 				DF115C5C2C794A6D00B7EF9C /* User.swift in Sources */,
 				DF115C722C794C3000B7EF9C /* PasswordField.swift in Sources */,
@@ -424,12 +428,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PullRequestNotifier/PullRequestNotifier.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PullRequestNotifier/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H5JBBMXM43;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -455,12 +459,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = PullRequestNotifier/PullRequestNotifier.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PullRequestNotifier/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H5JBBMXM43;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

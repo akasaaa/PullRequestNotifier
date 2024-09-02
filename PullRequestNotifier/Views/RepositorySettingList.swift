@@ -27,7 +27,7 @@ struct RepositorySettingList: View {
                     Text(repository.repository)
                 }
                 TableColumn("Label Filter") { repository in
-                    Text(repository.labelFilter)
+                    Text(repository.displayLabels.joined(separator: ", "))
                 }
             }
             .contextMenu(
@@ -57,11 +57,11 @@ struct RepositorySettingList: View {
         }
         .sheet(isPresented: $createNewRepositorySetting) {
             RepositorySettings(setting: nil)
-                .frame(width: 500, height: 300)
+                .frame(width: 500, height: 400)
         }
         .sheet(item: $editRepositorySetting) { repositorySetting in
             RepositorySettings(setting: repositorySetting)
-                .frame(width: 500, height: 300)
+                .frame(width: 500, height: 400)
         }
     }
 }

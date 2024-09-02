@@ -20,9 +20,13 @@ struct RepositorySettings: View {
 
     @State private var accountSettingId = AccountSettingModel.ID()
     @State private var repository = ""
-    @State private var labelFilter = ""
-    @State private var showSelf = true
-    @State private var showApprove = true
+    @State private var displayLabels = [String]()
+    @State private var displayMilestones = [String]()
+    @State private var hideSelfPullRequest = true
+    @State private var hideDraftPullRequest = true
+
+    @State private var editLabels = false
+    @State private var editMilestones = false
 
     @State private var shouldShowDestructiveAlert = false
     @State private var shouldShowInvalidParameterAlert = false
@@ -33,12 +37,15 @@ struct RepositorySettings: View {
         self.initialSetting = setting
     }
 
+    @State private var userName: String = ""
+       @State private var password: String = ""
+
     var body: some View {
         VStack(alignment: .trailing, spacing: 16) {
             HStack {
                 Text("Account: ")
                 Picker("", selection: $accountSettingId) {
-                    ForEach(accountSettingList, id: \.createdAt) {
+                    ForEach(accountSettingList, id: \.id) {
                         Text("\($0.userName)(\($0.host))").tag($0.id)
                     }
                 }
@@ -50,15 +57,84 @@ struct RepositorySettings: View {
                 TextField("e.g. akasaaa/PullRequestNotifier", text: $repository)
                     .frame(width: 300)
             }
-            HStack {
-                Text("Label Filter: ")
-                TextField("e.g. bug", text: $labelFilter)
-                    .frame(width: 300)
+            HStack(alignment: .top) {
+                Text("表示Label: ")
+                    .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                VStack(alignment: .trailing) {
+                    GroupBox {
+                        switch displayLabels.count {
+                        case 0:
+                                Text("未設定の場合、全てのLabelが表示されます")
+                                    .frame(maxWidth: .infinity)
+                        case 1:
+                                ForEach(displayLabels, id: \.self) { text in
+                                    Text(text)
+                                    if text != displayLabels.last {
+                                        Divider()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                        default:
+                            ScrollView {
+                                ForEach(displayLabels, id: \.self) { text in
+                                    Text(text)
+                                    if text != displayLabels.last {
+                                        Divider()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                            .frame(height: 40)
+                        }
+                    }
+                    Button("編集") {
+                        editLabels = true
+                    }
+                }
+                .frame(width: 300)
+
+            }
+            HStack(alignment: .top) {
+                Text("表示Milestone: ")
+                    .padding(EdgeInsets(top: 4, leading: 0, bottom: 0, trailing: 0))
+                VStack(alignment: .trailing) {
+                    GroupBox {
+                        switch displayMilestones.count {
+                        case 0:
+                                Text("未設定の場合、全てのMilestoneが表示されます")
+                                    .frame(maxWidth: .infinity)
+                        case 1:
+                                ForEach(displayMilestones, id: \.self) { text in
+                                    Text(text)
+                                    if text != displayMilestones.last {
+                                        Divider()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                        default:
+                            ScrollView {
+                                ForEach(displayMilestones, id: \.self) { text in
+                                    Text(text)
+                                    if text != displayMilestones.last {
+                                        Divider()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                            }
+                            .frame(height: 40)
+                        }
+                    }
+                    Button("編集") {
+                        editMilestones = true
+                    }
+                }
+                .frame(width: 300)
+
             }
             HStack {
-                Text("show self pull request: ")
+                Text("自身のPRを非表示にする: ")
                 HStack {
-                    Toggle(isOn: $showSelf) {}
+                    Toggle(isOn: $hideSelfPullRequest) {}
                         .toggleStyle(.switch)
                         .labelsHidden()
                     Spacer()
@@ -66,9 +142,9 @@ struct RepositorySettings: View {
                 .frame(width: 300)
             }
             HStack {
-                Text("show approving pull request: ")
+                Text("DraftのPRを非表示にする: ")
                 HStack {
-                    Toggle(isOn: $showApprove) {}
+                    Toggle(isOn: $hideDraftPullRequest) {}
                         .toggleStyle(.switch)
                         .labelsHidden()
                     Spacer()
@@ -98,10 +174,20 @@ struct RepositorySettings: View {
             if let initialSetting {
                 self.accountSettingId = initialSetting.accountSettingId
                 self.repository = initialSetting.repository
-                self.labelFilter = initialSetting.labelFilter
-                self.showSelf = initialSetting.showSelf
-                self.showApprove = initialSetting.showApprove
+                self.displayLabels = initialSetting.displayLabels
+                self.displayMilestones = initialSetting.displayMilestones
+                self.hideSelfPullRequest = initialSetting.hideSelfPullRequest
+                self.hideDraftPullRequest = initialSetting.hideDraftPullRequest
             }
+        }
+        .sheet(isPresented: $editLabels) {
+           TextListEditView(textList: $displayLabels)
+               .frame(width: 300, height: 200)
+        }
+
+        .sheet(isPresented: $editMilestones) {
+           TextListEditView(textList: $displayMilestones)
+               .frame(width: 300, height: 200)
         }
         .alert("編集を破棄してよろしいですか？", isPresented: $shouldShowDestructiveAlert) {
             Button("No", role: .cancel) {}
@@ -117,12 +203,15 @@ struct RepositorySettings: View {
         if let initialSetting {
             return initialSetting.accountSettingId != accountSettingId
                 || initialSetting.repository != repository
-                || initialSetting.labelFilter != labelFilter
-                || initialSetting.showSelf != showSelf
-                || initialSetting.showApprove != showApprove
+                || initialSetting.displayLabels != displayLabels
+                || initialSetting.displayMilestones != displayMilestones
+                || initialSetting.hideSelfPullRequest != hideSelfPullRequest
+                || initialSetting.hideDraftPullRequest != hideDraftPullRequest
         } else {
-            return !accountSettingList.contains { $0.id == accountSettingId }
-                || [repository, labelFilter].contains { !$0.isEmpty }
+            return accountSettingList.contains { $0.id == accountSettingId }
+                || !repository.isEmpty
+                || !displayLabels.isEmpty
+                || !displayMilestones.isEmpty
         }
     }
 
@@ -132,17 +221,19 @@ struct RepositorySettings: View {
             var savedItem = settingList[savedItemIndex]
             savedItem.accountSettingId = accountSettingId
             savedItem.repository = repository
-            savedItem.labelFilter = labelFilter
-            savedItem.showSelf = showSelf
-            savedItem.showApprove = showApprove
+            savedItem.displayLabels = displayLabels
+            savedItem.displayMilestones = displayMilestones
+            savedItem.hideSelfPullRequest = hideSelfPullRequest
+            savedItem.hideDraftPullRequest = hideDraftPullRequest
             settingList[savedItemIndex] = savedItem
         } else {
             var newItem = RepositorySettingModel()
             newItem.accountSettingId = accountSettingId
             newItem.repository = repository
-            newItem.labelFilter = labelFilter
-            newItem.showSelf = showSelf
-            newItem.showApprove = showApprove
+            newItem.displayLabels = displayLabels
+            newItem.displayMilestones = displayMilestones
+            newItem.hideSelfPullRequest = hideSelfPullRequest
+            newItem.hideDraftPullRequest = hideDraftPullRequest
             settingList.append(newItem)
         }
         repositorySettingListData = settingList.encoded
@@ -151,7 +242,7 @@ struct RepositorySettings: View {
 
 struct GitHubSettings_Previews: PreviewProvider {
     static var previews: some View {
-        RepositorySettings(setting: .init(repository: "akasaaa/PullRequestNotifier", labelFilter: "bug"))
+        RepositorySettings(setting: .init(repository: "akasaaa/PullRequestNotifier", displayLabels: ["bug1", "bug2", "bug3"]))
             .frame(width: 600, height: 400)
     }
 }

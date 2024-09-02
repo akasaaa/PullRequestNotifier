@@ -10,9 +10,10 @@ import Foundation
 struct RepositorySettingModel: Codable {
     var createdAt = Date()
     var repository = ""
-    var labelFilter = ""
-    var showSelf = true
-    var showApprove = true
+    var displayLabels = [String]()
+    var displayMilestones = [String]()
+    var hideSelfPullRequest = true
+    var hideDraftPullRequest = true
     var accountSettingId = AccountSettingModel.ID()
 }
 

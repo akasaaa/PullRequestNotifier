@@ -36,7 +36,7 @@ struct PullList: View {
             List {
                 ForEach(viewModel.fetchedSections) { section in
                     Section(section.repositorySetting.repository) {
-                        ForEach(section.pullRequests, id: \.number) { pullRequest in
+                        ForEach(section.filtered(), id: \.number) { pullRequest in
                             PullRow(accountSetting: section.accountSetting,
                                     pullRequest: pullRequest)
                                 .onTapGesture {
